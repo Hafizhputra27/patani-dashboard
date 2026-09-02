@@ -1,0 +1,63 @@
+:root {
+  --bg:#F4F7EF; --surface:#FFFFFF; --surface-2:#EDF1E6;
+  --ink:#1A241A; --ink-muted:#57634F; --line:#D7DFC9;
+  --brand:#2C6E49; --brand-deep:#1C4A31; --signature:#8AB84F;
+  --cat-1:#0072B2; --cat-2:#009E73; --cat-3:#E69F00;
+  --naik:#2C7A4B; --turun:#B5502F; --stabil:#7B8470;
+  --rain:#3C7A9E; --temp:#C46A3C;
+  --r:10px;
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --font-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'IBM Plex Mono','SF Mono','Roboto Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#10140D; --surface:#181E13; --surface-2:#212A1B;
+    --ink:#E9EEE0; --ink-muted:#9AA88C; --line:#2E3826;
+    --brand:#69B487; --brand-deep:#8FCBA5; --signature:#A6D26A;
+    --cat-1:#3C97D4; --cat-2:#12A97F; --cat-3:#B27B27;
+    --naik:#69B487; --turun:#D9805E; --stabil:#8C9580;
+    --rain:#5FA0C4; --temp:#D98C5E;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#10140D; --surface:#181E13; --surface-2:#212A1B;
+  --ink:#E9EEE0; --ink-muted:#9AA88C; --line:#2E3826;
+  --brand:#69B487; --brand-deep:#8FCBA5; --signature:#A6D26A;
+  --cat-1:#3C97D4; --cat-2:#12A97F; --cat-3:#B27B27;
+  --naik:#69B487; --turun:#D9805E; --stabil:#8C9580;
+  --rain:#5FA0C4; --temp:#D98C5E;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  transition: background-color .2s, color .2s;
+}
+h1, h2 { font-family: var(--font-display); font-weight: 600; }
+h2 { font-size: 1.5rem; line-height: 1.2; }
+h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.05rem; }
+a { color: var(--brand); }
+.eyebrow { font-family: var(--font-mono); font-weight: 500; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin: 0 0 .25rem; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-inline: clamp(1rem, 5vw, 3rem); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+main.wrap > section { margin-block: clamp(3rem, 8vw, 5rem); border-top: 1px solid var(--line); padding-top: clamp(2rem, 5vw, 3rem); }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .wrap { padding-inline: 1rem; }
+  header .wrap nav { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .panel { padding: 10px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .recharts-area-area { fill-opacity: 0.2 !important; }
+}
