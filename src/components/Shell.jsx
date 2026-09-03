@@ -16,17 +16,17 @@ export default function Shell() {
 
   return (
     <>
-      <header style={{ position: 'sticky', top: 0, zIndex: 20, background: 'var(--surface)', borderBottom: '1px solid var(--line)' }}>
+      <header className="site-header">
         <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56 }}>
           <strong style={{ fontFamily: 'var(--font-display)' }}>● Harga Hasil Bumi · Kab. Bandung</strong>
           <nav style={{ display: 'flex', gap: 14, marginLeft: 'auto' }} className="mono">
-            <RouteLink to="/" style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontSize: '.8rem' }}>Eksplorasi</RouteLink>
-            <RouteLink to="/prediksi" style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontSize: '.8rem' }}>Prediksi Model</RouteLink>
+            <RouteLink to="/">Eksplorasi</RouteLink>
+            <RouteLink to="/prediksi">Prediksi Model</RouteLink>
           </nav>
           <ThemeToggle />
         </div>
       </header>
-      <div style={{ position: 'sticky', top: 56, zIndex: 19, background: 'var(--surface)', borderBottom: '1px solid var(--line)' }}>
+      <div className="subbar">
         <div className="wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end', padding: '10px 0' }}>
           <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.8rem' }}>
             Data s/d {meta ? formatTanggal(meta.tanggal_data_terakhir, { pendek: true }) : '…'}

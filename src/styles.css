@@ -9,8 +9,6 @@
   --font-display:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-mono:'IBM Plex Mono','SF Mono','Roboto Mono',ui-monospace,monospace;
-  /* alias sementara — dihapus di Task 4 setelah migrasi inline style */
-  --bg:var(--bg-base); --brand:var(--accent); --cat-3:var(--accent);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -71,3 +69,18 @@ main.wrap > section { margin-block: clamp(3rem, 8vw, 5rem); border-top: 1px soli
 }
 
 .chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 12px 0; }
+
+.site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+.subbar { position: sticky; top: 56px; z-index: 19; border-bottom: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+.site-header nav a { color: var(--ink-muted); text-decoration: none; font-size: .8rem; }
+.site-header nav a[aria-current="page"] { color: var(--accent); }
+
+.stat { padding: 12px 14px; border-radius: 12px; }
+.stat--lime { background: var(--card-lime); color: var(--accent-ink); border-color: transparent; }
+
+.chip { font: 500 .8rem/1 var(--font-body); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--glass-brd); background: var(--glass); color: var(--ink); cursor: pointer; min-height: 34px; }
+.chip--on { background: var(--card-lime); color: var(--accent-ink); border-color: transparent; }
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header, .subbar { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface); }
+}
