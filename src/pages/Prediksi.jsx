@@ -4,6 +4,7 @@ import BannerKejujuran from '../components/BannerKejujuran'
 import PrediksiChip from '../components/PrediksiChip'
 import BacktestChart from '../charts/BacktestChart'
 import MaeHorizonChart from '../charts/MaeHorizonChart'
+import ProyeksiBergulir from '../sections/ProyeksiBergulir'
 
 export default function Prediksi() {
   const { data: pred } = useData('prediksi.json')
@@ -24,7 +25,7 @@ export default function Prediksi() {
       <h2>Apa yang model ML katakan — dan seberapa akurat</h2>
       <BannerKejujuran tanggal={meta.tanggal_data_terakhir} />
 
-      {/* Task 8 menyisipkan <ProyeksiBergulir /> di sini */}
+      <ProyeksiBergulir />
 
       <h3>Backtest (uji pada data yang sudah lewat)</h3>
       <BacktestChart seri={seri} komoditas={komoditas} pasar={pasarAktif} />
