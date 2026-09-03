@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom/vitest'
+import { afterEach, vi } from 'vitest'
+
+afterEach(() => { vi.useRealTimers() })
 
 // jsdom has no layout — give Recharts a real size so <ResponsiveContainer> renders.
 const W = 800

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useRoute, Route, RouteLink } from '../router'
 import { useData } from '../store/DataContext'
 import { formatTanggal } from '../store/dates'
+import { useToday } from '../store/today'
 import Selector from './Selector'
 import ThemeToggle from './ThemeToggle'
 import Eksplorasi from '../pages/Eksplorasi'
@@ -12,6 +13,7 @@ const ROUTES = ['/', '/prediksi']
 export default function Shell() {
   const { data: meta } = useData('meta.json')
   const { path, navigate } = useRoute()
+  const today = useToday()
   useEffect(() => { if (!ROUTES.includes(path)) navigate('/') }, [path, navigate])
 
   return (
@@ -19,6 +21,9 @@ export default function Shell() {
       <header className="site-header">
         <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56 }}>
           <strong style={{ fontFamily: 'var(--font-display)' }}>● Harga Hasil Bumi · Kab. Bandung</strong>
+          <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.72rem' }}>
+            {formatTanggal(today, { pendek: true })} · {String(today.getHours()).padStart(2, '0')}:{String(today.getMinutes()).padStart(2, '0')}
+          </span>
           <nav style={{ display: 'flex', gap: 14, marginLeft: 'auto' }} className="mono">
             <RouteLink to="/">Eksplorasi</RouteLink>
             <RouteLink to="/prediksi">Prediksi Model</RouteLink>
