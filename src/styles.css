@@ -61,3 +61,5 @@ main.wrap > section { margin-block: clamp(3rem, 8vw, 5rem); border-top: 1px soli
 @media (prefers-reduced-transparency: reduce) {
   .recharts-area-area { fill-opacity: 0.2 !important; }
 }
+
+.chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 12px 0; }

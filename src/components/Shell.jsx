@@ -1,0 +1,48 @@
+import { useEffect } from 'react'
+import { useRoute, Route, RouteLink } from '../router'
+import { useData } from '../store/DataContext'
+import { formatTanggal } from '../store/dates'
+import Selector from './Selector'
+import ThemeToggle from './ThemeToggle'
+import Eksplorasi from '../pages/Eksplorasi'
+import Prediksi from '../pages/Prediksi'
+
+const ROUTES = ['/', '/prediksi']
+
+export default function Shell() {
+  const { data: meta } = useData('meta.json')
+  const { path, navigate } = useRoute()
+  useEffect(() => { if (!ROUTES.includes(path)) navigate('/') }, [path, navigate])
+
+  return (
+    <>
+      <header style={{ position: 'sticky', top: 0, zIndex: 20, background: 'var(--surface)', borderBottom: '1px solid var(--line)' }}>
+        <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56 }}>
+          <strong style={{ fontFamily: 'var(--font-display)' }}>● Harga Hasil Bumi · Kab. Bandung</strong>
+          <nav style={{ display: 'flex', gap: 14, marginLeft: 'auto' }} className="mono">
+            <RouteLink to="/" style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontSize: '.8rem' }}>Eksplorasi</RouteLink>
+            <RouteLink to="/prediksi" style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontSize: '.8rem' }}>Prediksi Model</RouteLink>
+          </nav>
+          <ThemeToggle />
+        </div>
+      </header>
+      <div style={{ position: 'sticky', top: 56, zIndex: 19, background: 'var(--surface)', borderBottom: '1px solid var(--line)' }}>
+        <div className="wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end', padding: '10px 0' }}>
+          <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.8rem' }}>
+            Data s/d {meta ? formatTanggal(meta.tanggal_data_terakhir, { pendek: true }) : '…'}
+          </span>
+          <Selector kind="komoditas" />
+          <Selector kind="pasar" />
+          <Selector kind="rentang" />
+        </div>
+      </div>
+      <main className="wrap">
+        <Route path="/"><Eksplorasi /></Route>
+        <Route path="/prediksi"><Prediksi /></Route>
+      </main>
+      <footer className="wrap mono" style={{ color: 'var(--ink-muted)', fontSize: '.75rem', padding: '3rem 0' }}>
+        {meta?.catatan?.map((c, i) => <p key={i}>{c}</p>)}
+      </footer>
+    </>
+  )
+}
