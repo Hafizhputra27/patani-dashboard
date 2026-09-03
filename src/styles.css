@@ -88,15 +88,42 @@ main.wrap > section { margin-block: clamp(3rem, 8vw, 5rem); border-top: 1px soli
 .chip { font: 500 .8rem/1 var(--font-body); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--glass-brd); background: var(--glass); color: var(--ink); cursor: pointer; min-height: 34px; }
 .chip--on { background: var(--card-lime); color: var(--accent-ink); border-color: transparent; }
 
-.komoditas-picker { padding: 10px 12px; min-width: 260px; position: relative; }
-.picker-toggle { display: none; width: 100%; text-align: left; background: none; border: none; color: var(--ink); font-size: .85rem; cursor: pointer; }
-.picker-body input[type="search"] { width: 100%; margin-bottom: 8px; padding: 6px 8px; background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 8px; color: var(--ink); font: 400 .85rem var(--font-body); }
-.picker-body .eyebrow { margin-top: 6px; }
-.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-@media (max-width: 720px) {
-  .picker-toggle { display: block; }
-  .picker-body { display: none; }
-  .picker-body.is-open { display: block; position: absolute; z-index: 25; left: 0; right: 0; margin-top: 8px; padding: 12px; max-width: 92vw; max-height: 60vh; overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+/* sub-bar control labels — samakan dengan <Selector> */
+.ctrl-label { font-size: .7rem; color: var(--ink-muted); }
+.subbar .wrap { align-items: flex-end; }
+
+.komoditas-picker { position: relative; display: inline-flex; flex-direction: column; }
+.picker-toggle {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 10px;
+  min-width: 220px; max-width: 320px; margin-top: 2px; padding: 6px 8px;
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 8px;
+  color: var(--ink); font: 400 .9rem var(--font-body); cursor: pointer;
+}
+.picker-toggle > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.picker-body {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 30;
+  width: min(460px, calc(100vw - 24px)); max-height: min(62vh, 480px); overflow: auto;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.picker-body input[type="search"] {
+  width: 100%; margin-bottom: 8px; padding: 7px 9px;
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 8px;
+  color: var(--ink); font: 400 .85rem var(--font-body);
+}
+.picker-body .eyebrow { margin-top: 8px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+
+@media (max-width: 560px) {
+  .picker-toggle { min-width: 0; width: 100%; }
+  .komoditas-picker { width: 100%; }
+  .picker-body { width: 88vw; left: 0; }
 }
 
 @media (prefers-reduced-transparency: reduce) {

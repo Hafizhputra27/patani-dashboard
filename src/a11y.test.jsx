@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import App from './App'
 import { stubFetchAll } from './test-fixtures'
 
@@ -25,9 +25,11 @@ test('chart frames expose role=img with a label', async () => {
   document.querySelectorAll('div[role="img"]').forEach((el) => expect(el).toHaveAttribute('aria-label'))
 })
 
-test('picker radiogroup + chip radio; timeline node punya aria-label', async () => {
+test('picker popover: radiogroup + chip radio; timeline node punya aria-label', async () => {
   render(<App />)
-  await waitFor(() => expect(screen.getByRole('radiogroup', { name: /komoditas/i })).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByRole("button", { name: /^Komoditas:/ })).toBeInTheDocument())
+  fireEvent.click(screen.getByRole("button", { name: /^Komoditas:/ }))
+  expect(screen.getByRole('radiogroup', { name: /komoditas/i })).toBeInTheDocument()
   expect(screen.getAllByRole('radio').length).toBeGreaterThan(0)
   expect(screen.getAllByRole('button', { name: /^Tahap \d+:/ }).length).toBeGreaterThanOrEqual(1)
 })
