@@ -4,6 +4,7 @@ import { useData } from '../store/DataContext'
 import { formatTanggal } from '../store/dates'
 import { useToday } from '../store/today'
 import Selector from './Selector'
+import KomoditasPicker from './KomoditasPicker'
 import ThemeToggle from './ThemeToggle'
 import Eksplorasi from '../pages/Eksplorasi'
 import Prediksi from '../pages/Prediksi'
@@ -36,7 +37,7 @@ export default function Shell() {
           <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.8rem' }}>
             Data s/d {meta ? formatTanggal(meta.tanggal_data_terakhir, { pendek: true }) : '…'}
           </span>
-          <Selector kind="komoditas" />
+          <KomoditasPicker />
           <Selector kind="pasar" />
           <Selector kind="rentang" />
         </div>

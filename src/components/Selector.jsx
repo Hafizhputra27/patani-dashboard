@@ -9,10 +9,7 @@ export default function Selector({ kind }) {
   if (!meta) return null
 
   let opts, value, onChange, label
-  if (kind === 'komoditas') {
-    opts = meta.komoditas.map((k) => [k.nama, k.nama + (k.caveat_data ? ' ⚠' : '')])
-    value = f.komoditas; onChange = f.setKomoditas; label = 'Komoditas'
-  } else if (kind === 'pasar') {
+  if (kind === 'pasar') {
     opts = [['__semua__', 'Rentang 9 pasar'], ...meta.pasar.map((p) => [p, p])]
     value = f.pasar; onChange = f.setPasar; label = 'Pasar'
   } else {
