@@ -5,6 +5,7 @@ import PrediksiChip from '../components/PrediksiChip'
 import BacktestChart from '../charts/BacktestChart'
 import MaeHorizonChart from '../charts/MaeHorizonChart'
 import ProyeksiBergulir from '../sections/ProyeksiBergulir'
+import KonteksHistoris from '../sections/KonteksHistoris'
 
 export default function Prediksi() {
   const { data: pred } = useData('prediksi.json')
@@ -38,7 +39,7 @@ export default function Prediksi() {
       <h3>Ringkasan akurasi per horizon</h3>
       <MaeHorizonChart horizonDirect={riset.horizon_direct} />
 
-      {/* Task 11 menyisipkan <KonteksHistoris /> di sini */}
+      <KonteksHistoris />
     </div>
   )
 }
