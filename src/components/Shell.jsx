@@ -22,7 +22,7 @@ export default function Shell() {
       <header className="site-header">
         <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56 }}>
           <strong style={{ fontFamily: 'var(--font-display)' }}>● Harga Hasil Bumi · Kab. Bandung</strong>
-          <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.72rem' }}>
+          <span className="mono jam-hidup" style={{ color: 'var(--ink-muted)', fontSize: '.72rem' }}>
             {formatTanggal(today, { pendek: true })} · {String(today.getHours()).padStart(2, '0')}:{String(today.getMinutes()).padStart(2, '0')}
           </span>
           <nav style={{ display: 'flex', gap: 14, marginLeft: 'auto' }} className="mono">

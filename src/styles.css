@@ -56,10 +56,17 @@ a { color: var(--accent); }
 main.wrap > section { margin-block: clamp(3rem, 8vw, 5rem); border-top: 1px solid var(--line); padding-top: clamp(2rem, 5vw, 3rem); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-@media (max-width: 640px) {
+.site-header .wrap > strong { white-space: nowrap; }
+@media (max-width: 780px) {
   .wrap { padding-inline: 1rem; }
-  header .wrap nav, .site-header nav { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .site-header .wrap { flex-wrap: wrap; height: auto !important; padding-block: 8px; row-gap: 4px; }
+  .site-header nav { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .subbar { top: 0; position: static; }
   .panel { padding: 10px !important; }
+  .glass { border-radius: 12px; }
+}
+@media (max-width: 480px) {
+  .jam-hidup { display: none; } /* jam disembunyikan di layar sangat kecil */
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
