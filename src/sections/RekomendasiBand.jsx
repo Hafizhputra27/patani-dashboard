@@ -26,7 +26,7 @@ export default function RekomendasiBand() {
         adalah <em>lebar rentang</em>, bukan titik tengahnya.
       </p>
 
-      <div className="panel" style={{ padding: 16, margin: '16px 0', maxWidth: 460 }}>
+      <div className="glass" style={{ padding: 16, margin: '16px 0', maxWidth: 460 }}>
         <label className="mono" style={{ display: 'block', fontSize: '.8rem' }}>
           Harga {komoditas} sekarang (Rp)
           <input
@@ -34,7 +34,7 @@ export default function RekomendasiBand() {
             value={harga}
             onChange={(e) => setHarga(e.target.value)}
             aria-label={`harga ${komoditas} sekarang`}
-            style={{ display: 'block', marginTop: 4, fontFamily: 'var(--font-mono)', fontSize: '1rem', padding: '6px 8px', width: 180, background: 'var(--surface)', color: 'var(--ink)', border: '1px solid var(--line)', borderRadius: 8 }}
+            style={{ display: 'block', marginTop: 4, fontFamily: 'var(--font-mono)', fontSize: '1rem', padding: '6px 8px', width: 180, background: 'var(--glass)', color: 'var(--ink)', border: '1px solid var(--glass-brd)', borderRadius: 8 }}
           />
         </label>
         <label className="mono" style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 10, fontSize: '.85rem' }}>

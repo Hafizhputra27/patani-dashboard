@@ -1,14 +1,23 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import App from './App'
 import { stubFetchAll } from './test-fixtures'
 
-beforeEach(() => stubFetchAll())
+beforeEach(() => { stubFetchAll(); window.location.hash = '#/' })
+afterEach(() => { window.location.hash = '#/' })
 
-test('shell renders nav, data-date banner, sections', async () => {
+test('shell: nav route, banner tanggal, section eksplorasi di #/', async () => {
   render(<App />)
   await waitFor(() => expect(screen.getAllByText(/22 Agu 2026/).length).toBeGreaterThan(0))
-  for (const id of ['eksplorasi', 'cuaca', 'prediksi', 'band', 'riset']) {
+  for (const id of ['eksplorasi', 'cuaca', 'band', 'riset']) {
     expect(document.getElementById(id)).toBeInTheDocument()
   }
-  expect(screen.getByRole('link', { name: /Eksplorasi Harga/i })).toHaveAttribute('href', '#eksplorasi')
+  expect(screen.getByRole('link', { name: /Eksplorasi/i })).toHaveAttribute('href', '#/')
+  expect(screen.getByRole('link', { name: /Prediksi Model/i })).toHaveAttribute('href', '#/prediksi')
+})
+
+test('navigasi ke #/prediksi menampilkan konten model', async () => {
+  render(<App />)
+  await waitFor(() => expect(screen.getByRole('link', { name: /Prediksi Model/i })).toBeInTheDocument())
+  act(() => { window.location.hash = '#/prediksi'; window.dispatchEvent(new Event('hashchange')) })
+  await waitFor(() => expect(screen.getByText(/dihitung dari data terakhir/i)).toBeInTheDocument())
 })

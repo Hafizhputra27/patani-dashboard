@@ -1,8 +1,8 @@
 # Dashboard Harga Hasil Bumi — Kab. Bandung
 
 Dashboard statis (React 18 + Vite 5 + Recharts 2). Tanpa backend — semua data
-dari 8 file JSON di `public/data/` (salinan dari pipeline `example_scrap`),
-semua filter & kalkulasi di browser.
+dari 8 file JSON di `public/data/`, semua filter & kalkulasi di browser.
+Dependency runtime: hanya `react`, `react-dom`, `recharts`.
 
 ## Dev
 
@@ -30,25 +30,61 @@ Deploy folder `dist/` ke GitHub Pages / Netlify / Vercel. `DEPLOY_BASE` men-set
 ## Update data
 
 Di repo pipeline: `./run_pipeline.sh` → salin `dashboard_data/*.json` ke
-`public/data/` di sini → commit.
+`public/data/` di sini → commit. Selama data belum di-refresh, halaman
+`#/prediksi` menandai proyeksi "sudah N hari" dan (bila > 30 hari) meminta
+pipeline dijalankan ulang.
 
-## Prinsip
+## Halaman (routing hash, tanpa library)
+
+- **`#/` — Eksplorasi:** hero, harga 9 pasar (envelope + spotlight),
+  cuaca & kurs, rekomendasi band + kalkulator, ringkasan riset (timeline
+  8 tahap interaktif).
+- **`#/prediksi` — Model:** proyeksi band empiris **bergulir** (bergerak
+  tiap hari), backtest, kartu prediksi model vs baseline + label MAE, MAE
+  per horizon, konteks historis per komoditas.
+
+Komoditas dipilih lewat chip-grid per kategori + search (`KomoditasPicker`);
+pilihan disinkron ke URL (`#/prediksi?k=CABE+MERAH+KERITING`) agar bisa
+dibagikan. Header menampilkan tanggal/jam hari ini realtime.
+
+## Proyeksi band empiris
+
+"Estimasi hari ini" di `#/prediksi` = proyeksi dari **distribusi historis
+pergerakan harga** (`band.json`), bukan prediksi bergulir model ML — model
+tidak jalan di browser dan tidak mengalahkan baseline. Dari harga aktual
+terakhir (22 Agu 2026): median bergeser linear terhadap waktu, rentang
+p10–p90 melebar ~√waktu, dan parameter beralih ke "dekat Lebaran" bila
+tanggal target masuk window Lebaran. Angka model dari `prediksi.json` tetap
+ditampilkan apa adanya, berlabel "dihitung dari 22 Agu 2026".
+
+## Prinsip (dari PRD §2)
 
 - Setiap prediksi model ML tampil **berpasangan dengan baseline** + label
-  `model historis +X% MAE` — model tidak mengalahkan baseline persistence di
-  horizon manapun 1–7 hari (lihat section Ringkasan Riset).
-- Banner tanggal data terakhir selalu terlihat; prediksi dihitung dari tanggal
-  data terakhir, bukan hari ini.
+  `model historis +X% MAE`.
+- Banner tanggal data terakhir selalu terlihat; prediksi model dihitung dari
+  tanggal data terakhir, bukan hari ini.
 - 3 komoditas caveat (`BAWANG MERAH BATU`, `SAYURAN KENTANG LOKAL`,
   `KACANG TANAH KUPAS`) dan sel pasar×komoditas kosong ditandai eksplisit.
 - Tiap chart punya alternatif tabel (`<details>`), legend/label (bukan warna
-  saja), light + dark tema, dan menghormati `prefers-reduced-motion`.
+  saja), light + dark tema, `prefers-reduced-motion` / `-transparency` /
+  `forced-colors` dihormati.
+
+## Desain
+
+Tempered glass: panel kaca (`.glass`) di atas gradient-mesh gelap, aksen lime
+(`--accent`), IBM Plex Sans/Mono. Warna seri chart tetap palet colorblind-safe
+terpisah (`src/tokens.js`) — lime bukan warna seri.
 
 ## Struktur
 
-- `src/store/` — DataContext (lazy fetch + cache), FilterContext, ThemeContext, dates
-- `src/lib/` — series/stats helpers, `rekomendasiBand()` (port band logic)
-- `src/charts/` — komponen Recharts + `ChartFrame`
-- `src/components/` — Selector, ThemeToggle, PrediksiChip, dll
-- `src/sections/` — 6 section halaman
-- `src/tokens.js` — warna chart (design doc §12)
+- `src/router.jsx` — hash router (`useRoute`/`Route`/`RouteLink`)
+- `src/store/` — DataContext (lazy fetch + cache), FilterContext (+ URL sync),
+  ThemeContext, `dates.js`, `today.js` (`useToday`)
+- `src/lib/` — `series.js`, `stats.js`, `rekomendasi.js`, `proyeksi.js`
+- `src/components/` — `Glass`, `KomoditasPicker`, `Timeline`, `Shell`, dll
+- `src/charts/` — komponen Recharts + `ChartFrame` + `ProyeksiChart`
+- `src/pages/` — `Eksplorasi.jsx`, `Prediksi.jsx`
+- `src/sections/` — section per halaman
+- `src/styles.css` + `src/glass.css` — token + lapisan kaca
+
+Spec & plan: `docs/superpowers/specs/` dan `docs/superpowers/plans/`.

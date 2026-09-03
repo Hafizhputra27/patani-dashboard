@@ -1,7 +1,7 @@
 export function TooltipKustom({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="mono panel" style={{ padding: '8px 10px', fontSize: '.8rem' }}>
+    <div className="mono glass" style={{ padding: '8px 10px', fontSize: '.8rem' }}>
       <div style={{ color: 'var(--ink-muted)' }}>{label}</div>
       {payload.map((p) => (
         <div key={p.dataKey} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>

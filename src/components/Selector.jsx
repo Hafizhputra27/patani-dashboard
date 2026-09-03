@@ -9,10 +9,7 @@ export default function Selector({ kind }) {
   if (!meta) return null
 
   let opts, value, onChange, label
-  if (kind === 'komoditas') {
-    opts = meta.komoditas.map((k) => [k.nama, k.nama + (k.caveat_data ? ' ⚠' : '')])
-    value = f.komoditas; onChange = f.setKomoditas; label = 'Komoditas'
-  } else if (kind === 'pasar') {
+  if (kind === 'pasar') {
     opts = [['__semua__', 'Rentang 9 pasar'], ...meta.pasar.map((p) => [p, p])]
     value = f.pasar; onChange = f.setPasar; label = 'Pasar'
   } else {
@@ -25,7 +22,7 @@ export default function Selector({ kind }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        style={{ fontFamily: 'var(--font-body)', fontSize: '.9rem', color: 'var(--ink)', background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 8, padding: '6px 8px', marginTop: 2 }}
+        style={{ fontFamily: 'var(--font-body)', fontSize: '.9rem', color: 'var(--ink)', background: 'var(--glass)', border: '1px solid var(--glass-brd)', borderRadius: 8, padding: '6px 8px', marginTop: 2 }}
       >
         {opts.map(([v, t]) => <option key={v} value={v}>{t}</option>)}
       </select>
