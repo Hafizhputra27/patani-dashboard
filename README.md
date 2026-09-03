@@ -17,15 +17,20 @@ npm run dev
 npm test
 ```
 
-## Build & deploy
+## Deploy
+
+**Vercel (auto-deploy).** Repo terhubung ke Vercel — setiap push ke `main`
+otomatis deploy ke production, tiap PR dapat preview. Build default Vite
+(`vite build` → `dist/`), tanpa env var (`base` = `/`). Live:
+<https://patani-dashboard.vercel.app>.
+
+**Manual / static host lain.** `npm run build` → deploy folder `dist/`.
+`DEPLOY_BASE` men-set `base` path Vite (default `/`); untuk GitHub Pages
+project site pakai `/<nama-repo>/`:
 
 ```bash
 DEPLOY_BASE=/patani-dashboard/ npm run build
 ```
-
-Deploy folder `dist/` ke GitHub Pages / Netlify / Vercel. `DEPLOY_BASE` men-set
-`base` path Vite (default `/`); untuk GitHub Pages project site pakai
-`/<nama-repo>/`.
 
 ## Update data
 
