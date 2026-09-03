@@ -32,8 +32,9 @@ export default function ProyeksiChart() {
 
   const d0 = meta.tanggal_data_terakhir
   const awal = harga.tanggal_awal
+  const hariIni = hariIniISO(today)
   const d0Off = indexOfDate(awal, d0)
-  const todayOff = Math.max(d0Off, indexOfDate(awal, hariIniISO(today)))
+  const todayOff = Math.max(d0Off, indexOfDate(awal, hariIni))
   const startOff = Math.max(0, d0Off - 90)
   const endOff = todayOff + 7
   const lbl = (off) => formatTanggal(offsetToDate(awal, off), { pendek: true })
@@ -50,7 +51,7 @@ export default function ProyeksiChart() {
   const joinIdx = d0Off - startOff
   if (rows[joinIdx]) { rows[joinIdx].median = rows[joinIdx].aktual; rows[joinIdx].base = rows[joinIdx].aktual; rows[joinIdx].span = 0 }
 
-  const hue = inLebaranWindow(today) ? t.cat3 : t.cat2
+  const hue = inLebaranWindow(hariIni) ? t.cat3 : t.cat2
   const todayLabel = lbl(todayOff)
   const lebaranLabels = LEBARAN_DATES
     .map((d) => { const off = indexOfDate(awal, d); return off >= startOff && off <= endOff ? lbl(off) : null })
