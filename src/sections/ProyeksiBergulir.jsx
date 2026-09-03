@@ -1,6 +1,6 @@
 import { useData } from '../store/DataContext'
 import { useFilter } from '../store/FilterContext'
-import { useToday } from '../store/today'
+import { useToday, hariIniISO } from '../store/today'
 import { buildEnvelope } from '../lib/series'
 import { proyeksiBand, inLebaranWindow } from '../lib/proyeksi'
 import Glass from '../components/Glass'
@@ -23,8 +23,9 @@ export default function ProyeksiBergulir() {
   let anchor = null
   for (let i = serie.length - 1; i >= 0; i--) { if (serie[i] != null) { anchor = serie[i]; break } }
   const d0 = meta.tanggal_data_terakhir
-  const r = b && anchor != null ? proyeksiBand(b, anchor, d0, today) : null
-  const kondisi = inLebaranWindow(today) ? 'menjelang Lebaran' : 'normal'
+  const hariIni = hariIniISO(today) // tanggal kalender lokal, hindari geser UTC
+  const r = b && anchor != null ? proyeksiBand(b, anchor, d0, hariIni) : null
+  const kondisi = inLebaranWindow(hariIni) ? 'menjelang Lebaran' : 'normal'
 
   return (
     <>

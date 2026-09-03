@@ -7,10 +7,15 @@ const toDate = (v) => (v instanceof Date ? v : new Date(v + 'T00:00:00Z'))
 export function offsetToDate(tanggalAwal, offset) {
   return new Date(toDate(tanggalAwal).getTime() + offset * MS_HARI)
 }
-export function formatTanggal(d, { pendek = false } = {}) {
+// `lokal: true` — format pakai komponen waktu lokal browser (untuk tanggal "sekarang").
+// Default (UTC) benar untuk tanggal data yang di-anchor UTC midnight (offset / string).
+export function formatTanggal(d, { pendek = false, lokal = false } = {}) {
   const dt = toDate(d)
   const tbl = pendek ? BULAN_PENDEK : BULAN_PANJANG
-  return `${dt.getUTCDate()} ${tbl[dt.getUTCMonth()]} ${dt.getUTCFullYear()}`
+  const [day, mon, yr] = lokal
+    ? [dt.getDate(), dt.getMonth(), dt.getFullYear()]
+    : [dt.getUTCDate(), dt.getUTCMonth(), dt.getUTCFullYear()]
+  return `${day} ${tbl[mon]} ${yr}`
 }
 export function indexOfDate(tanggalAwal, target) {
   return Math.floor((toDate(target) - toDate(tanggalAwal)) / MS_HARI)
