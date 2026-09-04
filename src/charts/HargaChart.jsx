@@ -21,6 +21,7 @@ export default function HargaChart() {
   const full = env.map((e, i) => ({
     t: formatTanggal(offsetToDate(data.tanggal_awal, i), { pendek: true }),
     lo: e.min, hi: e.max, avg: e.avg,
+    span: e.min != null && e.max != null ? e.max - e.min : null,
     spot: spotlight ? spotlight[i] : undefined,
   }))
   const { arr: rows } = sliceRange(full, data.tanggal_awal, rentang)
@@ -41,8 +42,8 @@ export default function HargaChart() {
           <YAxis tick={{ fill: t.inkMuted, fontSize: 11 }} width={72} tickFormatter={(v) => 'Rp ' + v.toLocaleString('id-ID')} />
           <Tooltip content={<TooltipKustom />} />
           <Legend />
-          <Area dataKey="hi" name="rentang 9 pasar" stroke="none" fill={t.line} fillOpacity={0.7} isAnimationActive={!reduced} />
-          <Area dataKey="lo" stroke="none" fill="var(--surface)" fillOpacity={1} legendType="none" tooltipType="none" isAnimationActive={!reduced} />
+          <Area dataKey="lo" stackId="env" stroke="none" fill="transparent" legendType="none" tooltipType="none" isAnimationActive={!reduced} />
+          <Area dataKey="span" stackId="env" name="rentang 9 pasar" stroke="none" fill={t.line} fillOpacity={0.7} isAnimationActive={!reduced} />
           <Line dataKey="avg" name="rata-rata" stroke={t.ink} strokeWidth={2} dot={false} isAnimationActive={!reduced} />
           {spotlight && <Line dataKey="spot" name={pasar} stroke={t.cat1} strokeWidth={2.5} dot={false} isAnimationActive={!reduced} />}
         </ComposedChart>
