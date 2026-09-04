@@ -3,3 +3,6 @@ dist
 .DS_Store
 *.local
 .vercel
+
+# dokumen biner hasil generate (regenerate lewat skrip, jangan di-commit)
+*.docx
