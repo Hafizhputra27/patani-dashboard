@@ -34,10 +34,10 @@ DEPLOY_BASE=/patani-dashboard/ npm run build
 
 ## Update data
 
-Di repo pipeline: `./run_pipeline.sh` → salin `dashboard_data/*.json` ke
-`public/data/` di sini → commit. Selama data belum di-refresh, halaman
-`#/prediksi` menandai proyeksi "sudah N hari" dan (bila > 30 hari) meminta
-pipeline dijalankan ulang.
+1. **Otomatis (GitHub Actions):** Workflow `.github/workflows/auto-refresh-data.yml` berjalan tiap hari pukul 07:30 WIB untuk menarik data 8 file JSON terbaru yang dihasilkan oleh repo pipeline [`example_scrap`](https://github.com/Hafizhputra27/example_scrap) dan otomatis meng-commit ke repo ini.
+2. **Manual:** Di repo pipeline: `./run_pipeline.sh` → salin `dashboard_data/*.json` ke `public/data/` di sini → commit.
+
+Selama data belum di-refresh, halaman `#/prediksi` menandai proyeksi "sudah N hari" dan (bila > 30 hari) meminta pipeline dijalankan ulang.
 
 ## Halaman (routing hash, tanpa library)
 
