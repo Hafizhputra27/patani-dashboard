@@ -4,7 +4,6 @@ import { useFilter } from '../store/FilterContext'
 import { useTokens, usePrefersReducedMotion } from '../store/ThemeContext'
 import { offsetToDate, formatTanggal } from '../store/dates'
 import { buildEnvelope, sampel } from '../lib/series'
-import Glass from '../components/Glass'
 import ChartFrame from '../charts/ChartFrame'
 import { TooltipKustom } from '../charts/tooltip'
 
@@ -45,11 +44,15 @@ export default function KonteksHistoris() {
       {b && (
         <div className="chip-grid">
           {[['normal', 'Kondisi normal'], ['dekat_lebaran', 'Menjelang Lebaran']].map(([key, judul]) => (
-            <Glass key={key} tone={key === 'dekat_lebaran' ? 'dark' : 'pale'} style={{ padding: 14 }}>
+            <div key={key} className="panel" style={{ padding: 16 }}>
               <p className="eyebrow">{judul}</p>
-              <div className="mono">median {pct(b[key]?.median)} · p10 {pct(b[key]?.p10)} · p90 {pct(b[key]?.p90)}</div>
-              <div className="mono" style={{ fontSize: '.75rem' }}>lebar band {b[key]?.lebar_band}% · n={b[key]?.n}</div>
-            </Glass>
+              <div className="mono" style={{ fontSize: '.9rem', fontWeight: 500, color: 'var(--ink)', marginTop: 4 }}>
+                Median {pct(b[key]?.median)} · p10 {pct(b[key]?.p10)} · p90 {pct(b[key]?.p90)}
+              </div>
+              <div className="mono" style={{ fontSize: '.75rem', color: 'var(--ink-muted)', marginTop: 4 }}>
+                lebar band {b[key]?.lebar_band}% · n={b[key]?.n}
+              </div>
+            </div>
           ))}
         </div>
       )}

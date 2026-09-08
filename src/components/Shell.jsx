@@ -20,12 +20,17 @@ export default function Shell() {
   return (
     <>
       <header className="site-header">
-        <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56 }}>
-          <strong style={{ fontFamily: 'var(--font-display)' }}>● Harga Hasil Bumi · Kab. Bandung</strong>
-          <span className="mono jam-hidup" style={{ color: 'var(--ink-muted)', fontSize: '.72rem' }}>
+        <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, height: 60 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)' }} />
+            <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', color: 'var(--ink)' }}>
+              Harga Pangan · Kab. Bandung
+            </strong>
+          </div>
+          <span className="mono jam-hidup" style={{ color: 'var(--ink-muted)', fontSize: '.75rem' }}>
             {formatTanggal(today, { pendek: true, lokal: true })} · {String(today.getHours()).padStart(2, '0')}:{String(today.getMinutes()).padStart(2, '0')}
           </span>
-          <nav style={{ display: 'flex', gap: 14, marginLeft: 'auto' }} className="mono">
+          <nav style={{ display: 'flex', gap: 8, marginLeft: 'auto' }} className="mono">
             <RouteLink to="/">Eksplorasi</RouteLink>
             <RouteLink to="/prediksi">Prediksi Model</RouteLink>
           </nav>
@@ -33,8 +38,8 @@ export default function Shell() {
         </div>
       </header>
       <div className="subbar">
-        <div className="wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end', padding: '10px 0' }}>
-          <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.8rem' }}>
+        <div className="wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'flex-end', padding: '12px 0' }}>
+          <span className="mono" style={{ color: 'var(--ink-muted)', fontSize: '.8rem', paddingBottom: 4 }}>
             Data s/d {meta ? formatTanggal(meta.tanggal_data_terakhir, { pendek: true }) : '…'}
           </span>
           <KomoditasPicker />
@@ -46,8 +51,8 @@ export default function Shell() {
         <Route path="/"><Eksplorasi /></Route>
         <Route path="/prediksi"><Prediksi /></Route>
       </main>
-      <footer className="wrap mono" style={{ color: 'var(--ink-muted)', fontSize: '.75rem', padding: '3rem 0' }}>
-        {meta?.catatan?.map((c, i) => <p key={i}>{c}</p>)}
+      <footer className="wrap mono" style={{ color: 'var(--ink-muted)', fontSize: '.75rem', padding: '3rem 0', borderTop: '1px solid var(--line)', marginTop: '4rem' }}>
+        {meta?.catatan?.map((c, i) => <p key={i} style={{ margin: '4px 0' }}>• {c}</p>)}
       </footer>
     </>
   )

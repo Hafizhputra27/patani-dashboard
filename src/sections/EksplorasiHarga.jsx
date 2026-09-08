@@ -24,19 +24,19 @@ export default function EksplorasiHarga() {
   return (
     <>
       <p className="eyebrow">Eksplorasi Harga</p>
-      <h2>Harga {komoditas} di 9 pasar</h2>
-      <p style={{ color: 'var(--ink-muted)', maxWidth: '60ch' }}>
-        Data harian pasar tradisional (tingkat eceran). Pilih komoditas, pasar, dan rentang di bilah atas.
+      <h2>Perbandingan Harga {komoditas} di 9 Pasar</h2>
+      <p style={{ color: 'var(--ink-muted)', maxWidth: '65ch', margin: '0 0 1rem' }}>
+        Pantau fluktuasi harga eceran harian antar pasar tradisional. Gunakan bilah atas untuk memilih komoditas, pasar, dan rentang waktu.
       </p>
       {CAVEAT.includes(komoditas) && (
-        <p><BadgeCaveat>komoditas ini jarang dilaporkan di 1–3 pasar; sebagian data kosong</BadgeCaveat></p>
+        <p><BadgeCaveat>Sebagian pasar jarang melaporkan komoditas ini sehingga terdapat data kosong</BadgeCaveat></p>
       )}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, margin: '16px 0' }}>
-        <StatTile label="Harga terakhir" value={rp(s.terakhir)} />
-        <StatTile label="Terendah (periode)" value={rp(s.min)} />
-        <StatTile label="Tertinggi (periode)" value={rp(s.max)} />
-        <StatTile label="Median (periode)" value={rp(s.median)} />
-        <StatTile label="Data kosong" value={s.kosongPct + '%'} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, margin: '14px 0' }}>
+        <StatTile label="Harga Terakhir" value={rp(s.terakhir)} />
+        <StatTile label="Terendah" value={rp(s.min)} />
+        <StatTile label="Tertinggi" value={rp(s.max)} />
+        <StatTile label="Median" value={rp(s.median)} />
+        <StatTile label="Data Kosong" value={s.kosongPct + '%'} />
       </div>
       <HargaChart />
     </>

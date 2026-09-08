@@ -13,10 +13,10 @@ export default function CuacaKurs() {
   return (
     <>
       <p className="eyebrow">Cuaca &amp; Kurs</p>
-      <h2>Kondisi lingkungan</h2>
-      <p style={{ color: 'var(--ink-muted)', maxWidth: '60ch' }}>
-        {pasar === '__semua__' && `Menampilkan ${p} (pilih pasar spesifik di bilah atas). `}
-        Fitur cuaca &amp; kurs <strong>tidak menambah akurasi prediksi harga</strong> di horizon yang diuji — lihat Ringkasan Riset.
+      <h2>Kondisi Lingkungan &amp; Ekonomi</h2>
+      <p style={{ color: 'var(--ink-muted)', maxWidth: '65ch', margin: '0 0 1rem' }}>
+        {pasar === '__semua__' && `Menampilkan data untuk ${p}. `}
+        Informasi curah hujan, temperatur pasar, dan kurs USD/IDR sebagai faktor pelengkap.
       </p>
       <CurahHujanChart pasar={p} />
       <SuhuChart pasar={p} />

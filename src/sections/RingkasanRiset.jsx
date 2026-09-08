@@ -9,7 +9,10 @@ export default function RingkasanRiset() {
   return (
     <>
       <p className="eyebrow">Ringkasan Riset</p>
-      <h2>Delapan tahap menguji apakah model bisa memprediksi harga</h2>
+      <h2>8 Tahap Evaluasi Model Prediksi Harga</h2>
+      <p style={{ color: 'var(--ink-muted)', maxWidth: '65ch', margin: '0 0 1rem' }}>
+        Perjalanan metodologi pengujian model Machine Learning terhadap baseline persistensi harga di lapangan.
+      </p>
       <Timeline items={r.tahapan} />
       <h3>MAE model vs baseline per horizon</h3>
       <TabelView
@@ -20,8 +23,10 @@ export default function RingkasanRiset() {
         kolom={['Horizon (recursive)', 'MAE model', 'MAE baseline']}
         baris={r.horizon_recursive.map((h) => [h.horizon, h.mae_model, h.mae_baseline])}
       />
-      <h3>Kesimpulan</h3>
-      <p style={{ maxWidth: '70ch' }}>{r.kesimpulan}</p>
+      <h3>Kesimpulan Riset</h3>
+      <div className="panel" style={{ padding: 16, margin: '12px 0' }}>
+        <p style={{ maxWidth: '75ch', margin: 0, color: 'var(--ink)' }}>{r.kesimpulan}</p>
+      </div>
     </>
   )
 }

@@ -21,9 +21,9 @@ export default function Prediksi() {
   const seri = backtest.komoditas[komoditas]?.[pasarAktif]
 
   return (
-    <div id="prediksi">
-      <p className="eyebrow">Prediksi Model</p>
-      <h2>Apa yang model ML katakan — dan seberapa akurat</h2>
+    <div id="prediksi" style={{ paddingTop: '1rem' }}>
+      <p className="eyebrow">Evaluasi Model ML</p>
+      <h2>Akurasi Prediksi Machine Learning</h2>
       <BannerKejujuran tanggal={meta.tanggal_data_terakhir} />
 
       <ProyeksiBergulir />

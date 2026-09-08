@@ -31,21 +31,24 @@ export default function Hero() {
     .filter(Boolean)
 
   return (
-    <div style={{ padding: '2.5rem 0 1rem' }}>
-      <p className="eyebrow">Rentang, bukan titik</p>
-      <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', lineHeight: 1.15, maxWidth: '20ch' }}>
-        Yang bisa diprediksi dari harga sayur bukan angka pastinya, tapi seberapa lebar kemungkinannya bergerak.
+    <div style={{ padding: '2rem 0 1rem' }}>
+      <p className="eyebrow">Pita Ketidakpastian</p>
+      <h1 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', lineHeight: 1.2, maxWidth: '24ch', marginBottom: '0.75rem' }}>
+        Pantau Tren & Rentang Risiko Harga Hasil Bumi
       </h1>
+      <p style={{ fontSize: '1rem', maxWidth: '65ch', margin: '0 0 1.5rem' }}>
+        Pergerakan harga komoditas lebih mudah diantisipasi melalui rentang kemungkinan fluktuasi (p10–p90) daripada menebak satu angka pasti.
+      </p>
       <ChartFrame
-        caption={`Ilustrasi: garis = harga rata-rata ${komoditas}; pita = ±rentang historis 7-hari (p10–p90). Bukan prediksi bergulir.`}
+        caption={`Garis tengah = rata-rata harga ${komoditas}. Area hijau = rentang sebaran historis 7 hari (p10–p90).`}
         tabel={{ kolom: ['Tanggal', 'p10', 'Median', 'p90'], baris: sampel(rows, 40).map((r) => [r.t, r.p10, r.median, r.p90]) }}
       >
-        <PitaKetidakpastian data={rows} kondisi="normal" tinggi={360} lebaranX={lebaranX} />
+        <PitaKetidakpastian data={rows} kondisi="normal" tinggi={340} lebaranX={lebaranX} />
       </ChartFrame>
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
         <StatTile label="Komoditas" value={meta.komoditas.length} />
         <StatTile label="Pasar" value={meta.pasar.length} />
-        <StatTile label="Bulan data" value={Math.round(indexOfDate(meta.tanggal_data_awal, meta.tanggal_data_terakhir) / 30)} />
+        <StatTile label="Bulan Data" value={Math.round(indexOfDate(meta.tanggal_data_awal, meta.tanggal_data_terakhir) / 30)} />
       </div>
     </div>
   )

@@ -1,15 +1,15 @@
 import { getTokens } from './tokens'
 
-test('getTokens: seri colorblind-safe tak berubah', () => {
-  expect(getTokens('dark').cat3).toBe('#B27B27')
-  expect(getTokens('light').cat3).toBe('#E69F00')
-  expect(getTokens('dark').cat1).toBe('#3C97D4')
-  expect(getTokens('light').signature).toBe('#8AB84F')
+test('getTokens: seri colorblind-safe', () => {
+  expect(getTokens('dark').cat3).toBe('#FBBF24')
+  expect(getTokens('light').cat3).toBe('#F59E0B')
+  expect(getTokens('dark').cat1).toBe('#38BDF8')
+  expect(getTokens('light').signature).toBe('#10B981')
 })
-test('getTokens: default light, bg + ink baru', () => {
-  expect(getTokens(undefined).bg).toBe('#EEF3E9')
-  expect(getTokens('dark').bg).toBe('#0B1410')
-  expect(getTokens('dark').ink).toBe('#F2F6F0')
+test('getTokens: default light, bg + ink', () => {
+  expect(getTokens(undefined).bg).toBe('#FFFFFF')
+  expect(getTokens('dark').bg).toBe('#0F172A')
+  expect(getTokens('dark').ink).toBe('#F8FAFC')
 })
 test('kontras ink-muted vs bg >= 4.5:1 kedua tema', () => {
   const lum = (hex) => {

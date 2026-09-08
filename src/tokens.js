@@ -1,19 +1,18 @@
 // Warna untuk props Recharts (hex solid, bukan var(--x)). Tema-aware.
-// Seri chart (cat1/cat2/cat3, rain, temp, naik/turun/stabil, signature) colorblind-safe
-// per design-doc §3 — TIDAK berubah. Aksen lime UI bukan warna seri.
+// Seri chart (cat1/cat2/cat3, rain, temp, naik/turun/stabil, signature) colorblind-safe.
 const LIGHT = {
-  ink: '#12201A', inkMuted: '#46564C', line: '#B9C6B0', surface: '#F8FAF5', bg: '#EEF3E9',
-  brand: '#3C8E1C', signature: '#8AB84F',
-  cat1: '#0072B2', cat2: '#009E73', cat3: '#E69F00',
-  naik: '#2C7A4B', turun: '#B5502F', stabil: '#7B8470',
-  rain: '#3C7A9E', temp: '#C46A3C',
+  ink: '#0F172A', inkMuted: '#64748B', line: '#E2E8F0', surface: '#FFFFFF', bg: '#FFFFFF',
+  brand: '#10B981', signature: '#10B981',
+  cat1: '#0284C7', cat2: '#10B981', cat3: '#F59E0B',
+  naik: '#16A34A', turun: '#DC2626', stabil: '#64748B',
+  rain: '#0284C7', temp: '#EA580C',
 }
 const DARK = {
-  ink: '#F2F6F0', inkMuted: '#9FB098', line: '#2E3A30', surface: '#141E19', bg: '#0B1410',
-  brand: '#93E84D', signature: '#A6D26A',
-  cat1: '#3C97D4', cat2: '#12A97F', cat3: '#B27B27',
-  naik: '#69B487', turun: '#D9805E', stabil: '#8C9580',
-  rain: '#5FA0C4', temp: '#D98C5E',
+  ink: '#F8FAFC', inkMuted: '#94A3B8', line: '#334155', surface: '#1E293B', bg: '#0F172A',
+  brand: '#34D399', signature: '#34D399',
+  cat1: '#38BDF8', cat2: '#34D399', cat3: '#FBBF24',
+  naik: '#4ADE80', turun: '#F87171', stabil: '#94A3B8',
+  rain: '#38BDF8', temp: '#FB923C',
 }
 
 export const getTokens = (theme) => (theme === 'dark' ? DARK : LIGHT)
