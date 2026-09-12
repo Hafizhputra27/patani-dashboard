@@ -6,23 +6,27 @@ const realMatchMedia = window.matchMedia
 beforeEach(() => { stubFetchAll(); window.location.hash = '#/' })
 afterEach(() => { window.location.hash = '#/'; window.matchMedia = realMatchMedia })
 
-test('every section chart exposes a table view', async () => {
-  render(<App />)
-  await waitFor(() => expect(screen.getAllByText('Lihat sebagai tabel').length).toBeGreaterThanOrEqual(3))
-})
-
-test('nav route links are valid', async () => {
+test('nav route links valid: 6 rute sidebar', async () => {
   render(<App />)
   await waitFor(() => expect(screen.getByRole('link', { name: /Prediksi Model/i })).toBeInTheDocument())
-  document.querySelectorAll('header nav a[href^="#/"]').forEach((a) => {
-    expect(['#/', '#/prediksi']).toContain(a.getAttribute('href'))
-  })
+  const hrefs = [...document.querySelectorAll('nav a[href^="#/"]')].map((a) => a.getAttribute('href')).sort()
+  expect(hrefs).toEqual(['#/', '#/cuaca', '#/eksplorasi', '#/prediksi', '#/rekomendasi', '#/riset'])
 })
 
 test('chart frames expose role=img with a label', async () => {
   render(<App />)
-  await waitFor(() => expect(document.querySelectorAll('div[role="img"]').length).toBeGreaterThanOrEqual(3))
+  await waitFor(() => expect(document.querySelectorAll('div[role="img"]').length).toBeGreaterThanOrEqual(1))
   document.querySelectorAll('div[role="img"]').forEach((el) => expect(el).toHaveAttribute('aria-label'))
+})
+
+test('setiap chart punya alternatif tabel di halamannya', async () => {
+  render(<App />)
+  await waitFor(() => expect(screen.getAllByText('Lihat sebagai tabel').length).toBeGreaterThanOrEqual(1))
+  for (const hash of ['#/eksplorasi', '#/prediksi']) {
+    window.location.hash = hash
+    window.dispatchEvent(new Event('hashchange'))
+    await waitFor(() => expect(screen.getAllByText('Lihat sebagai tabel').length).toBeGreaterThanOrEqual(1))
+  }
 })
 
 test('picker popover: radiogroup + chip radio; timeline node punya aria-label', async () => {
@@ -31,7 +35,9 @@ test('picker popover: radiogroup + chip radio; timeline node punya aria-label', 
   fireEvent.click(screen.getByRole("button", { name: /^Komoditas:/ }))
   expect(screen.getByRole('radiogroup', { name: /komoditas/i })).toBeInTheDocument()
   expect(screen.getAllByRole('radio').length).toBeGreaterThan(0)
-  expect(screen.getAllByRole('button', { name: /^Tahap \d+:/ }).length).toBeGreaterThanOrEqual(1)
+  window.location.hash = '#/riset'
+  window.dispatchEvent(new Event('hashchange'))
+  await waitFor(() => expect(screen.getAllByRole('button', { name: /^Tahap \d+:/ }).length).toBeGreaterThanOrEqual(1))
 })
 
 test('reduced-transparency: render #/ dan #/prediksi tanpa error', async () => {

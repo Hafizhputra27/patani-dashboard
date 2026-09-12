@@ -68,6 +68,16 @@ body {
   flex-direction: column;
   flex-shrink: 0;
   padding: 24px 16px;
+  transition: width 0.2s ease, min-width 0.2s ease, padding 0.2s ease;
+}
+
+.app-shell.nav-closed .sidebar {
+  width: 0;
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-right: none;
+  overflow: hidden;
 }
 
 .sidebar__brand {
@@ -182,7 +192,31 @@ body {
 
 .topbar__left {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nav-toggle:hover {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--green-600);
+  outline-offset: 2px;
 }
 
 .topbar__greeting {
@@ -721,6 +755,7 @@ h3 {
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .app-shell { flex-direction: column; border-radius: 16px; }
+  .app-shell.nav-closed .sidebar { display: none; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
   .sidebar__nav { flex-direction: row; flex-wrap: wrap; }
   .topbar__right { width: 100%; flex-wrap: wrap; }

@@ -1,35 +1,37 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRoute, Route, RouteLink } from '../router'
 import { useData } from '../store/DataContext'
 import { formatTanggal } from '../store/dates'
 import { useToday } from '../store/today'
 import Selector from './Selector'
 import KomoditasPicker from './KomoditasPicker'
+import Ringkasan from '../pages/Ringkasan'
 import Eksplorasi from '../pages/Eksplorasi'
 import Prediksi from '../pages/Prediksi'
+import CuacaKurs from '../sections/CuacaKurs'
+import RekomendasiBand from '../sections/RekomendasiBand'
+import RingkasanRiset from '../sections/RingkasanRiset'
 import { LogoIcon, DashboardIcon, StoreIcon, PredictionIcon, WeatherIcon, RecommendationIcon, BookOpenIcon } from './Icons'
 
 const ROUTES = ['/', '/eksplorasi', '/prediksi', '/cuaca', '/rekomendasi', '/riset']
-const SECTION_SCROLL = { '/cuaca': 'cuaca', '/rekomendasi': 'band', '/riset': 'riset' }
+const SECTION_CLASS = { '/cuaca': 'card', '/rekomendasi': 'card', '/riset': 'card' }
 
 export default function Shell() {
   const { data: meta } = useData('meta.json')
   const { path, navigate } = useRoute()
   const today = useToday()
+  const [sideOpen, setSideOpen] = useState(true)
   useEffect(() => { if (!ROUTES.includes(path)) navigate('/') }, [path, navigate])
   useEffect(() => {
     const reduced = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const behavior = reduced ? 'auto' : 'smooth'
-    const id = SECTION_SCROLL[path]
-    const target = id ? document.getElementById(id) : document.querySelector('.main-workspace')
-    if (target && typeof target.scrollIntoView === 'function') target.scrollIntoView({ behavior, block: 'start' })
+    document.querySelector('.main-workspace')?.scrollTo?.({ top: 0, behavior: reduced ? 'auto' : 'smooth' })
   }, [path])
 
   return (
     <div className="app-wrapper">
-      <div className="app-shell">
+      <div className={sideOpen ? 'app-shell' : 'app-shell nav-closed'}>
         {/* Left Sidebar Navigation (EdgesPay SaaS Style) */}
-        <aside className="sidebar">
+        <aside className="sidebar" id="sidebar-nav" aria-label="Navigasi utama">
           <div className="sidebar__brand">
             <div className="sidebar__logo-icon">
               <LogoIcon size={18} />
@@ -38,27 +40,27 @@ export default function Shell() {
           </div>
 
           <nav className="sidebar__nav mono">
-            <RouteLink to="/" className={({ path }) => path === '/' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/' ? 'page' : undefined}>
+            <RouteLink to="/" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <DashboardIcon size={17} />
               <span>Ringkasan</span>
             </RouteLink>
-            <RouteLink to="/eksplorasi" className={({ path }) => path === '/eksplorasi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/eksplorasi' ? 'page' : undefined}>
+            <RouteLink to="/eksplorasi" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <StoreIcon size={17} />
               <span>Eksplorasi Pasar</span>
             </RouteLink>
-            <RouteLink to="/prediksi" className={({ path }) => path === '/prediksi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/prediksi' ? 'page' : undefined}>
+            <RouteLink to="/prediksi" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <PredictionIcon size={17} />
               <span>Prediksi Model</span>
             </RouteLink>
-            <RouteLink to="/cuaca" className={({ path }) => path === '/cuaca' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/cuaca' ? 'page' : undefined}>
+            <RouteLink to="/cuaca" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <WeatherIcon size={17} />
               <span>Cuaca & Kurs</span>
             </RouteLink>
-            <RouteLink to="/rekomendasi" className={({ path }) => path === '/rekomendasi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/rekomendasi' ? 'page' : undefined}>
+            <RouteLink to="/rekomendasi" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <RecommendationIcon size={17} />
               <span>Rekomendasi</span>
             </RouteLink>
-            <RouteLink to="/riset" className={({ path }) => path === '/riset' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/riset' ? 'page' : undefined}>
+            <RouteLink to="/riset" className={({ isActive }) => 'sidebar__link' + (isActive ? ' sidebar__link--active' : '')}>
               <BookOpenIcon size={17} />
               <span>Riset Metodologi</span>
             </RouteLink>
@@ -84,8 +86,24 @@ export default function Shell() {
           {/* Top Bar Header */}
           <header className="topbar">
             <div className="topbar__left">
-              <h1 className="topbar__greeting">Harga Pangan · Kab. Bandung</h1>
-              <p className="topbar__subtext">Pusat informasi harga harian, analisis tren, dan prediksi panen.</p>
+              <button
+                type="button"
+                className="nav-toggle"
+                aria-label={sideOpen ? 'Sembunyikan menu navigasi' : 'Tampilkan menu navigasi'}
+                aria-expanded={sideOpen}
+                aria-controls="sidebar-nav"
+                onClick={() => setSideOpen((s) => !s)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  {sideOpen
+                    ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
+                    : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>}
+                </svg>
+              </button>
+              <div>
+                <h1 className="topbar__greeting">Harga Pangan · Kab. Bandung</h1>
+                <p className="topbar__subtext">Pusat informasi harga harian, analisis tren, dan prediksi panen.</p>
+              </div>
             </div>
             <div className="topbar__right">
               <KomoditasPicker />
@@ -96,12 +114,12 @@ export default function Shell() {
 
           {/* Body Section Content */}
           <main className="content-body">
-            <Route path="/"><Eksplorasi /></Route>
+            <Route path="/"><Ringkasan /></Route>
             <Route path="/eksplorasi"><Eksplorasi /></Route>
             <Route path="/prediksi"><Prediksi /></Route>
-            <Route path="/cuaca"><Eksplorasi /></Route>
-            <Route path="/rekomendasi"><Eksplorasi /></Route>
-            <Route path="/riset"><Eksplorasi /></Route>
+            <Route path="/cuaca"><div className={SECTION_CLASS['/cuaca']}><CuacaKurs /></div></Route>
+            <Route path="/rekomendasi"><div className={SECTION_CLASS['/rekomendasi']}><RekomendasiBand /></div></Route>
+            <Route path="/riset"><div className={SECTION_CLASS['/riset']}><RingkasanRiset /></div></Route>
           </main>
 
           {/* Footer Notes */}
