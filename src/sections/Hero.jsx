@@ -43,7 +43,7 @@ export default function Hero() {
         caption={`Garis tengah = rata-rata harga ${komoditas}. Area hijau = rentang sebaran historis 7 hari (p10–p90).`}
         tabel={{ kolom: ['Tanggal', 'p10', 'Median', 'p90'], baris: sampel(rows, 40).map((r) => [r.t, r.p10, r.median, r.p90]) }}
       >
-        <PitaKetidakpastian data={rows} kondisi="normal" tinggi={340} lebaranX={lebaranX} />
+        <PitaKetidakpastian key={komoditas} data={rows} kondisi="normal" tinggi={340} lebaranX={lebaranX} />
       </ChartFrame>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
         <StatTile label="Komoditas" value={meta.komoditas.length} />

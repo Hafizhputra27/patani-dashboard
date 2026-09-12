@@ -67,7 +67,7 @@ export default function ProyeksiChart() {
         baris: sampel(rows).map((r) => [r.t, r.aktual, r.median ?? null, r.base ?? null, r.base != null ? r.base + r.span : null]),
       }}
     >
-      <ResponsiveContainer width="100%" height={340}>
+      <ResponsiveContainer key={`${komoditas}|${pasar}`} width="100%" height={340}>
         <ComposedChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
           <defs>
             <linearGradient id="proy" x1="0" y1="0" x2="0" y2="1">

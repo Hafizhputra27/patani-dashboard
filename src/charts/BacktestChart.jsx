@@ -25,7 +25,7 @@ export default function BacktestChart({ seri, komoditas, pasar }) {
       caption={`Periode uji ${rows.length} hari. MAE model Rp ${maeM.toLocaleString('id-ID')} · baseline Rp ${maeB.toLocaleString('id-ID')}.`}
       tabel={{ kolom: ['Tanggal', 'Aktual', 'Model', 'Baseline'], baris: rows.map((r) => [r.t, r.aktual, r.model, r.baseline]) }}
     >
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer key={`${komoditas}|${pasar}`} width="100%" height={320}>
         <LineChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
           <CartesianGrid stroke={t.line} vertical={false} />
           <XAxis dataKey="t" tick={{ fill: t.inkMuted, fontSize: 11 }} minTickGap={40} />

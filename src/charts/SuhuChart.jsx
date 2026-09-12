@@ -28,7 +28,7 @@ export default function SuhuChart({ pasar }) {
       caption="°C: garis = rata-rata, pita = min–max harian."
       tabel={{ kolom: ['Tanggal', 'Min', 'Rata-rata', 'Max'], baris: sampel(rows).map((r) => [r.t, r.lo, r.avg, r.hi]) }}
     >
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer key={pasar} width="100%" height={300}>
         <ComposedChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
           <CartesianGrid stroke={t.line} vertical={false} />
           <XAxis dataKey="t" tick={{ fill: t.inkMuted, fontSize: 11 }} minTickGap={48} />

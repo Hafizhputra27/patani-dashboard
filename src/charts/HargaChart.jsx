@@ -35,7 +35,7 @@ export default function HargaChart() {
         baris: sampel(rows).map((r) => [r.t, r.lo, r.avg != null ? Math.round(r.avg) : null, r.hi]),
       }}
     >
-      <ResponsiveContainer width="100%" height={360}>
+      <ResponsiveContainer key={`${komoditas}|${pasar}|${rentang}`} width="100%" height={360}>
         <ComposedChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
           <CartesianGrid stroke={t.line} vertical={false} />
           <XAxis dataKey="t" tick={{ fill: t.inkMuted, fontSize: 11 }} minTickGap={48} />

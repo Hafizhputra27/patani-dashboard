@@ -25,7 +25,7 @@ export default function CurahHujanChart({ pasar }) {
       caption="mm per hari (Open-Meteo, data aktual historis)."
       tabel={{ kolom: ['Tanggal', 'Curah hujan (mm)'], baris: sampel(rows).map((r) => [r.t, r.hujan]) }}
     >
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer key={pasar} width="100%" height={300}>
         <BarChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
           <CartesianGrid stroke={t.line} vertical={false} />
           <XAxis dataKey="t" tick={{ fill: t.inkMuted, fontSize: 11 }} minTickGap={48} />

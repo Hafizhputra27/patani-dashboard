@@ -5,18 +5,25 @@ import { formatTanggal } from '../store/dates'
 import { useToday } from '../store/today'
 import Selector from './Selector'
 import KomoditasPicker from './KomoditasPicker'
-import ThemeToggle from './ThemeToggle'
 import Eksplorasi from '../pages/Eksplorasi'
 import Prediksi from '../pages/Prediksi'
-import { LogoIcon, DashboardIcon, PredictionIcon, WeatherIcon, RecommendationIcon, ResearchIcon } from './Icons'
+import { LogoIcon, DashboardIcon, StoreIcon, PredictionIcon, WeatherIcon, RecommendationIcon, BookOpenIcon } from './Icons'
 
 const ROUTES = ['/', '/eksplorasi', '/prediksi', '/cuaca', '/rekomendasi', '/riset']
+const SECTION_SCROLL = { '/cuaca': 'cuaca', '/rekomendasi': 'band', '/riset': 'riset' }
 
 export default function Shell() {
   const { data: meta } = useData('meta.json')
   const { path, navigate } = useRoute()
   const today = useToday()
   useEffect(() => { if (!ROUTES.includes(path)) navigate('/') }, [path, navigate])
+  useEffect(() => {
+    const reduced = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const behavior = reduced ? 'auto' : 'smooth'
+    const id = SECTION_SCROLL[path]
+    const target = id ? document.getElementById(id) : document.querySelector('.main-workspace')
+    if (target && typeof target.scrollIntoView === 'function') target.scrollIntoView({ behavior, block: 'start' })
+  }, [path])
 
   return (
     <div className="app-wrapper">
@@ -36,7 +43,7 @@ export default function Shell() {
               <span>Ringkasan</span>
             </RouteLink>
             <RouteLink to="/eksplorasi" className={({ path }) => path === '/eksplorasi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/eksplorasi' ? 'page' : undefined}>
-              <DashboardIcon size={17} />
+              <StoreIcon size={17} />
               <span>Eksplorasi Pasar</span>
             </RouteLink>
             <RouteLink to="/prediksi" className={({ path }) => path === '/prediksi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/prediksi' ? 'page' : undefined}>
@@ -52,7 +59,7 @@ export default function Shell() {
               <span>Rekomendasi</span>
             </RouteLink>
             <RouteLink to="/riset" className={({ path }) => path === '/riset' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/riset' ? 'page' : undefined}>
-              <ResearchIcon size={17} />
+              <BookOpenIcon size={17} />
               <span>Riset Metodologi</span>
             </RouteLink>
           </nav>
@@ -68,7 +75,6 @@ export default function Shell() {
               <span className="jam-hidup" style={{ fontSize: '.72rem', color: 'var(--ink-muted)' }}>
                 {formatTanggal(today, { pendek: true, lokal: true })} · {String(today.getHours()).padStart(2, '0')}:{String(today.getMinutes()).padStart(2, '0')}
               </span>
-              <ThemeToggle />
             </div>
           </div>
         </aside>

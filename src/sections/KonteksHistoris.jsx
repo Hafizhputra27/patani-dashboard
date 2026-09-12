@@ -31,7 +31,7 @@ export default function KonteksHistoris() {
         caption="Rata-rata 9 pasar. Untuk membandingkan pola antar komoditas."
         tabel={{ kolom: ['Tanggal', 'Harga'], baris: sampel(rows).map((r) => [r.t, Math.round(r.harga)]) }}
       >
-        <ResponsiveContainer width="100%" height={220}>
+        <ResponsiveContainer key={komoditas} width="100%" height={220}>
           <LineChart data={rows} margin={{ top: 8, right: 12, bottom: 8, left: 4 }}>
             <CartesianGrid stroke={t.line} vertical={false} />
             <XAxis dataKey="t" tick={{ fill: t.inkMuted, fontSize: 11 }} minTickGap={48} />

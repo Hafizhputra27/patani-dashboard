@@ -23,7 +23,7 @@ test('search memfilter, klik chip mengubah komoditas + menutup popover, caveat b
   fireEvent.click(screen.getByRole("button", { name: /^Komoditas:/ }))
   fireEvent.change(screen.getByLabelText(/cari komoditas/i), { target: { value: 'batu' } })
   const chip = screen.getByRole('radio', { name: /BAWANG MERAH BATU/ })
-  expect(chip).toHaveTextContent('⚠')
+  expect(chip).toHaveAttribute('title', 'data 1–3 pasar jarang lapor')
   fireEvent.click(chip)
   expect(screen.getByTestId('k')).toHaveTextContent('BAWANG MERAH BATU')
   expect(screen.queryByRole('dialog')).toBeNull() // popover tertutup

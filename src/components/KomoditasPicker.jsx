@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useData } from '../store/DataContext'
 import { useFilter } from '../store/FilterContext'
+import { ChevronDownIcon, AlertTriangleIcon } from './Icons'
 
 const KATEGORI = ['bawang', 'cabai', 'sayuran', 'umbi', 'kacang', 'buah']
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -44,7 +45,7 @@ export default function KomoditasPicker() {
         onClick={() => setOpen((o) => !o)}
       >
         <span>{komoditas}</span>
-        <span aria-hidden="true">▾</span>
+        <ChevronDownIcon size={12} />
       </button>
 
       {open && (
@@ -72,7 +73,7 @@ export default function KomoditasPicker() {
                       title={k.caveat_data ? 'data 1–3 pasar jarang lapor' : undefined}
                       onClick={() => pilih(k.nama)}
                     >
-                      {k.nama}{k.caveat_data ? ' ⚠' : ''}
+                      {k.nama}{k.caveat_data ? <AlertTriangleIcon size={11} className="" /> : ''}
                     </button>
                   ))}
                 </div>
