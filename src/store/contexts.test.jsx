@@ -34,11 +34,11 @@ function TProbe() {
   const t = useTokens()
   return <button onClick={toggle}>{theme}:{t.cat3}</button>
 }
-test('theme toggle swaps tokens + data-theme attr', () => {
+test('theme is locked to the clean white palette', () => {
   render(<ThemeProvider><TProbe /></ThemeProvider>)
   const b = screen.getByRole('button')
-  const first = b.textContent
+  expect(b).toHaveTextContent('light:#F59E0B')
   act(() => b.click())
-  expect(b.textContent).not.toBe(first)
-  expect(['light', 'dark']).toContain(document.documentElement.dataset.theme)
+  expect(b).toHaveTextContent('light:#F59E0B')
+  expect(document.documentElement.dataset.theme).toBe('light')
 })

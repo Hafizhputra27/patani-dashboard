@@ -9,7 +9,7 @@ export function ringkasHarga(vals) {
     min: sorted[0] ?? null,
     max: sorted.at(-1) ?? null,
     median: median ?? null,
-    kosongPct: Math.round(((vals.length - ada.length) / vals.length) * 100),
+    kosongPct: vals.length ? Math.round(((vals.length - ada.length) / vals.length) * 100) : 0,
   }
 }
 

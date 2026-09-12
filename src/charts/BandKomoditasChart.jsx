@@ -33,10 +33,10 @@ export default function BandKomoditasChart({ band }) {
           <ReferenceLine x={0} stroke={t.inkMuted} strokeDasharray="2 4" />
           <Tooltip content={<TooltipKustom />} />
           <Legend />
-          <Scatter name="normal" data={normal} fill={t.cat1} isAnimationActive={!reduced}>
+          <Scatter name="normal" data={normal} dataKey="median" fill={t.cat1} isAnimationActive={!reduced}>
             <ErrorBar dataKey="err" width={4} strokeWidth={3} stroke={t.cat1} direction="x" />
           </Scatter>
-          <Scatter name="menjelang Lebaran" data={lebaran} fill={t.cat3} isAnimationActive={!reduced}>
+          <Scatter name="menjelang Lebaran" data={lebaran} dataKey="median" fill={t.cat3} isAnimationActive={!reduced}>
             <ErrorBar dataKey="err" width={4} strokeWidth={3} stroke={t.cat3} direction="x" />
           </Scatter>
         </ComposedChart>

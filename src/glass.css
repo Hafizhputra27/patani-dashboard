@@ -17,9 +17,9 @@ body {
 }
 
 .glass--lime {
-  background: #F0FDF4;
-  color: #166534;
-  border: 1px solid #BBF7D0;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
 }
 
 .glass--dark {

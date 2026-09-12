@@ -1,14 +1,24 @@
-import { useTheme } from '../store/ThemeContext'
+import { SunIcon } from './Icons'
 
 export default function ThemeToggle() {
-  const { theme, toggle } = useTheme()
   return (
     <button
-      onClick={toggle}
-      aria-label={`Ganti ke tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
-      style={{ minWidth: 40, minHeight: 40, background: 'var(--glass)', border: '1px solid var(--glass-brd)', borderRadius: 8, color: 'var(--ink)', cursor: 'pointer' }}
+      aria-label="Tema terang aktif"
+      title="Tema terang aktif"
+      style={{
+        width: 36,
+        height: 36,
+        background: 'var(--surface)',
+        border: '1px solid var(--line)',
+        borderRadius: 10,
+        color: 'var(--ink)',
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
-      {theme === 'dark' ? '☾' : '☀'}
+      <SunIcon size={16} />
     </button>
   )
 }

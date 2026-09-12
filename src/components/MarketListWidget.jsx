@@ -34,18 +34,19 @@ export default function MarketListWidget() {
           const arr = perPasar[namaPasar] || []
           let latestPrice = null
           for (let i = arr.length - 1; i >= 0; i--) {
-            if (arr[i] != null) { latestPrice = arr[i]; break }
+            if (arr[i] != null) {
+              latestPrice = arr[i]
+              break
+            }
           }
           const isSelected = pasar === namaPasar
 
           return (
-            <div
+            <button
               key={namaPasar}
               className={`market-item ${isSelected ? 'market-item--selected' : ''}`}
+              type="button"
               onClick={() => setPasar(namaPasar)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter') setPasar(namaPasar) }}
             >
               <div className="market-item__avatar">
                 <span>{idx + 1}</span>
@@ -53,13 +54,13 @@ export default function MarketListWidget() {
               <div className="market-item__info">
                 <div className="market-item__name">{namaPasar}</div>
                 <div className="market-item__status">
-                  {latestPrice != null ? '● Laporan aktif' : '○ Data kosong'}
+                  {latestPrice != null ? 'Laporan aktif' : 'Data kosong'}
                 </div>
               </div>
               <div className="market-item__price mono">
                 <strong>{rp(latestPrice)}</strong>
               </div>
-            </div>
+            </button>
           )
         })}
       </div>

@@ -24,7 +24,7 @@ export default function Prediksi() {
   return (
     <div id="prediksi" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <div>
-        <p className="eyebrow" style={{ color: '#7C3AED' }}>Evaluasi Model ML</p>
+        <p className="eyebrow">Evaluasi Model ML</p>
         <h2>Akurasi Prediksi Machine Learning</h2>
         <BannerKejujuran tanggal={meta.tanggal_data_terakhir} />
       </div>

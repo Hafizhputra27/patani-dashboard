@@ -8,8 +8,9 @@ import KomoditasPicker from './KomoditasPicker'
 import ThemeToggle from './ThemeToggle'
 import Eksplorasi from '../pages/Eksplorasi'
 import Prediksi from '../pages/Prediksi'
+import { LogoIcon, DashboardIcon, PredictionIcon, WeatherIcon, RecommendationIcon, ResearchIcon } from './Icons'
 
-const ROUTES = ['/', '/prediksi']
+const ROUTES = ['/', '/eksplorasi', '/prediksi', '/cuaca', '/rekomendasi', '/riset']
 
 export default function Shell() {
   const { data: meta } = useData('meta.json')
@@ -23,18 +24,36 @@ export default function Shell() {
         {/* Left Sidebar Navigation (EdgesPay SaaS Style) */}
         <aside className="sidebar">
           <div className="sidebar__brand">
-            <div className="sidebar__logo-icon">🌱</div>
+            <div className="sidebar__logo-icon">
+              <LogoIcon size={18} />
+            </div>
             <span className="sidebar__brand-name">Patani</span>
           </div>
 
           <nav className="sidebar__nav mono">
-            <RouteLink to="/" className="sidebar__link">
-              <span className="sidebar__icon">📊</span>
-              <span>Eksplorasi</span>
+            <RouteLink to="/" className={({ path }) => path === '/' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/' ? 'page' : undefined}>
+              <DashboardIcon size={17} />
+              <span>Ringkasan</span>
             </RouteLink>
-            <RouteLink to="/prediksi" className="sidebar__link">
-              <span className="sidebar__icon">🤖</span>
+            <RouteLink to="/eksplorasi" className={({ path }) => path === '/eksplorasi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/eksplorasi' ? 'page' : undefined}>
+              <DashboardIcon size={17} />
+              <span>Eksplorasi Pasar</span>
+            </RouteLink>
+            <RouteLink to="/prediksi" className={({ path }) => path === '/prediksi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/prediksi' ? 'page' : undefined}>
+              <PredictionIcon size={17} />
               <span>Prediksi Model</span>
+            </RouteLink>
+            <RouteLink to="/cuaca" className={({ path }) => path === '/cuaca' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/cuaca' ? 'page' : undefined}>
+              <WeatherIcon size={17} />
+              <span>Cuaca & Kurs</span>
+            </RouteLink>
+            <RouteLink to="/rekomendasi" className={({ path }) => path === '/rekomendasi' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/rekomendasi' ? 'page' : undefined}>
+              <RecommendationIcon size={17} />
+              <span>Rekomendasi</span>
+            </RouteLink>
+            <RouteLink to="/riset" className={({ path }) => path === '/riset' ? 'sidebar__link sidebar__link--active' : 'sidebar__link'} aria-current={path === '/riset' ? 'page' : undefined}>
+              <ResearchIcon size={17} />
+              <span>Riset Metodologi</span>
             </RouteLink>
           </nav>
 
@@ -72,7 +91,11 @@ export default function Shell() {
           {/* Body Section Content */}
           <main className="content-body">
             <Route path="/"><Eksplorasi /></Route>
+            <Route path="/eksplorasi"><Eksplorasi /></Route>
             <Route path="/prediksi"><Prediksi /></Route>
+            <Route path="/cuaca"><Eksplorasi /></Route>
+            <Route path="/rekomendasi"><Eksplorasi /></Route>
+            <Route path="/riset"><Eksplorasi /></Route>
           </main>
 
           {/* Footer Notes */}

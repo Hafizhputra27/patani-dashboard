@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useData } from '../store/DataContext'
 import { useFilter } from '../store/FilterContext'
 import { formatTanggal } from '../store/dates'
+import { TrendingUpIcon, TrendingDownIcon, MinusIcon } from './Icons'
 
 const rp = (v) => (v == null ? '—' : 'Rp ' + Math.round(v).toLocaleString('id-ID'))
 
@@ -17,7 +18,7 @@ export default function PrediksiHorizonWidget() {
   const { data: pred } = useData('prediksi.json')
   const { data: meta } = useData('meta.json')
   const { data: band } = useData('band.json')
-  const { komoditas, setKomoditas, pasar } = useFilter()
+  const { komoditas, setKomoditas, pasar, setPasar } = useFilter()
   const [horizon, setHorizon] = useState('h3') // 'h1', 'h3', 'h7'
 
   if (!pred || !meta || !band) return null
@@ -44,40 +45,64 @@ export default function PrediksiHorizonWidget() {
     <div className="card forecast-widget">
       <div className="card__header">
         <div>
-          <div className="eyebrow" style={{ color: '#7C3AED' }}>Kalkulator &amp; Estimasi Cepat</div>
+          <div className="eyebrow">Kalkulator &amp; Estimasi Cepat</div>
           <h3 className="card__title">Prediksi Harga {horizon === 'h3' ? '3 Hari' : horizon === 'h7' ? '7 Hari' : 'Besok'}</h3>
-          <p className="card__subtitle">{komoditas} di {pasarAktif}</p>
+          <p className="card__subtitle">Pilih komoditas, pasar, dan horizon prediksi.</p>
         </div>
+      </div>
 
-        {/* Horizon Pill Switcher */}
+      <div className="forecast-controls">
+        <label className="forecast-control">
+          <span>Komoditas</span>
+          <select value={komoditas} onChange={(e) => setKomoditas(e.target.value)}>
+            {meta.komoditas.map((item) => (
+              <option key={item.nama} value={item.nama}>{item.nama}</option>
+            ))}
+          </select>
+        </label>
+        <label className="forecast-control">
+          <span>Pasar</span>
+          <select value={pasar} onChange={(e) => setPasar(e.target.value)}>
+            <option value="__semua__">Pasar pertama tersedia</option>
+            {meta.pasar.map((item) => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+          </select>
+        </label>
+        <div className="forecast-control">
+          <span>Horizon</span>
         <div className="horizon-pills">
           <button
             type="button"
             className={`horizon-pill ${horizon === 'h1' ? 'horizon-pill--active' : ''}`}
             onClick={() => setHorizon('h1')}
+            aria-pressed={horizon === 'h1'}
           >
-            Besok (H+1)
+            H+1
           </button>
           <button
             type="button"
             className={`horizon-pill ${horizon === 'h3' ? 'horizon-pill--active' : ''}`}
             onClick={() => setHorizon('h3')}
+            aria-pressed={horizon === 'h3'}
           >
-            3 Hari (H+3)
+            H+3
           </button>
           <button
             type="button"
             className={`horizon-pill ${horizon === 'h7' ? 'horizon-pill--active' : ''}`}
             onClick={() => setHorizon('h7')}
+            aria-pressed={horizon === 'h7'}
           >
-            7 Hari (H+7)
+            H+7
           </button>
+        </div>
         </div>
       </div>
 
       {/* Quick Cabai Switcher Pills */}
       <div className="quick-commodity-row">
-        <span className="mono" style={{ fontSize: '.75rem', color: 'var(--ink-muted)', alignSelf: 'center' }}>Pilih Cabai:</span>
+        <span className="mono" style={{ fontSize: '.75rem', color: 'var(--ink-muted)', alignSelf: 'center' }}>Cepat:</span>
         {CABAI_LIST.map((c) => (
           <button
             key={c}
@@ -96,17 +121,18 @@ export default function PrediksiHorizonWidget() {
           <div className="forecast-result-card__top">
             <div>
               <div className="mono" style={{ fontSize: '.8rem', color: 'var(--ink-muted)' }}>
-                Target Tanggal: <strong>{targetDate ? formatTanggal(targetDate) : '—'}</strong>
+                {komoditas} di {pasarAktif} · Target <strong>{targetDate ? formatTanggal(targetDate) : '—'}</strong>
               </div>
               <div className="forecast-price mono">
                 {rp(predModel)}
                 <span className={`forecast-badge ${isNaik ? 'forecast-badge--up' : isTurun ? 'forecast-badge--down' : 'forecast-badge--flat'}`}>
-                  {Number(deltaPct) > 0 ? `+${deltaPct}%` : `${deltaPct}%`}
+                  {isNaik ? <TrendingUpIcon size={13} /> : isTurun ? <TrendingDownIcon size={13} /> : <MinusIcon size={13} />}
+                  <span>{Number(deltaPct) > 0 ? `+${deltaPct}%` : `${deltaPct}%`}</span>
                 </span>
               </div>
             </div>
             <div className="forecast-baseline mono">
-              <div style={{ fontSize: '.75rem', color: 'var(--ink-muted)' }}>Harga Saat Ini (Baseline):</div>
+              <div style={{ fontSize: '.75rem', color: 'var(--ink-muted)' }}>Harga saat ini</div>
               <div style={{ fontSize: '1.05rem', fontWeight: 600 }}>{rp(hargaSekarang)}</div>
             </div>
           </div>
@@ -117,7 +143,9 @@ export default function PrediksiHorizonWidget() {
           </div>
 
           <div className={`forecast-advice ${isNaik ? 'forecast-advice--up' : isTurun ? 'forecast-advice--down' : 'forecast-advice--flat'}`}>
-            <span style={{ fontSize: '1.2rem' }}>{isNaik ? '💡' : isTurun ? '⚡' : '📌'}</span>
+            <div className="forecast-advice__icon">
+              {isNaik ? <TrendingUpIcon size={18} /> : isTurun ? <TrendingDownIcon size={18} /> : <MinusIcon size={18} />}
+            </div>
             <div>
               <strong>
                 {isNaik

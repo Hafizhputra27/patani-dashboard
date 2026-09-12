@@ -8,11 +8,7 @@ const LIGHT = {
   rain: '#0284C7', temp: '#EA580C',
 }
 const DARK = {
-  ink: '#F8FAFC', inkMuted: '#94A3B8', line: '#334155', surface: '#1E293B', bg: '#0F172A',
-  brand: '#34D399', signature: '#34D399',
-  cat1: '#38BDF8', cat2: '#34D399', cat3: '#FBBF24',
-  naik: '#4ADE80', turun: '#F87171', stabil: '#94A3B8',
-  rain: '#38BDF8', temp: '#FB923C',
+  ...LIGHT,
 }
 
 export const getTokens = (theme) => (theme === 'dark' ? DARK : LIGHT)

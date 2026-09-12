@@ -31,12 +31,25 @@ export function Route({ path, children }) {
   return current === path ? children : null
 }
 
-export function RouteLink({ to, children, ...rest }) {
+export function RouteLink({ to, children, className, ...rest }) {
   const { path } = useRoute()
   const target = to.replace(/^#/, '')
+  const isActive = path === target
+  const resolvedClassName = typeof className === 'function'
+    ? className({ path, isActive })
+    : className
   return (
-    <a href={'#' + target} aria-current={path === target ? 'page' : undefined} {...rest}>
+    <a {...rest} href={'#' + target} className={resolvedClassName} aria-current={isActive ? 'page' : undefined}>
       {children}
     </a>
   )
+}
+
+export function useRouteQuery() {
+  const { query } = useRoute()
+  return {
+    komoditas: query.get('k') || 'CABE MERAH KERITING',
+    pasar: query.get('p') || '__semua__',
+    rentang: query.get('r') || '2thn',
+  }
 }

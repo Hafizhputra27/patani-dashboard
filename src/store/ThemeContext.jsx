@@ -4,10 +4,9 @@ import { getTokens } from '../tokens'
 const Ctx = createContext(null)
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() =>
-    typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  const [theme] = useState('light')
   useEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
-  const toggle = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+  const toggle = () => {}
   return <Ctx.Provider value={{ theme, toggle }}>{children}</Ctx.Provider>
 }
 

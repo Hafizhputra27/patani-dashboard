@@ -31,6 +31,7 @@ export default function ProyeksiChart() {
   if (anchor == null) return <p className="mono">Tidak ada harga untuk {komoditas}.</p>
 
   const d0 = meta.tanggal_data_terakhir
+  const d0Label = formatTanggal(d0, { pendek: true })
   const awal = harga.tanggal_awal
   const hariIni = hariIniISO(today)
   const d0Off = indexOfDate(awal, d0)
@@ -60,7 +61,7 @@ export default function ProyeksiChart() {
   return (
     <ChartFrame
       judul={`Proyeksi harga ${komoditas}`}
-      caption="Garis solid = harga aktual s/d 22 Agu 2026. Pita = proyeksi band empiris (p10–p90), melebar seiring waktu. Bukan prediksi model ML."
+      caption={`Garis solid = harga aktual s/d ${d0Label}. Pita = proyeksi band empiris (p10–p90), melebar seiring waktu. Bukan prediksi model ML.`}
       tabel={{
         kolom: ['Tanggal', 'Aktual', 'Median proyeksi', 'p10', 'p90'],
         baris: sampel(rows).map((r) => [r.t, r.aktual, r.median ?? null, r.base ?? null, r.base != null ? r.base + r.span : null]),

@@ -32,10 +32,16 @@ test('Route renders only on match; RouteLink marks current', () => {
     <>
       <Route path="/"><span>home</span></Route>
       <Route path="/prediksi"><span>pred</span></Route>
-      <RouteLink to="/prediksi">link</RouteLink>
+      <RouteLink
+        to="/prediksi"
+        className={({ isActive }) => (isActive ? 'active-link' : 'plain-link')}
+      >
+        link
+      </RouteLink>
     </>,
   )
   expect(screen.queryByText('home')).toBeNull()
   expect(screen.getByText('pred')).toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'link' })).toHaveAttribute('aria-current', 'page')
+  expect(screen.getByRole('link', { name: 'link' })).toHaveClass('active-link')
 })
