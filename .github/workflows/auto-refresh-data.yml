@@ -12,6 +12,8 @@ permissions:
 jobs:
   sync-data:
     runs-on: ubuntu-latest
+    env:
+      SCRAP_TOKEN: ${{ secrets.SCRAP_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,7 +26,7 @@ jobs:
 
           for f in "${FILES[@]}"; do
             echo "Mengunduh ${f}..."
-            curl -fsSL "${BASE_URL}/${f}" -o "public/data/${f}"
+            curl -fsSL -H "Authorization: Bearer ${SCRAP_TOKEN}" "${BASE_URL}/${f}" -o "public/data/${f}"
             cp "public/data/${f}" "dashboard_data/${f}"
           done
 
