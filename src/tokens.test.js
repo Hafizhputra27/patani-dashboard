@@ -4,7 +4,7 @@ test('getTokens: seri colorblind-safe', () => {
   expect(getTokens('dark').cat3).toBe('#F59E0B')
   expect(getTokens('light').cat3).toBe('#F59E0B')
   expect(getTokens('dark').cat1).toBe('#0284C7')
-  expect(getTokens('light').signature).toBe('#10B981')
+  expect(getTokens('light').signature).toBe('#487848')
 })
 test('getTokens: default light, bg + ink', () => {
   expect(getTokens(undefined).bg).toBe('#FFFFFF')

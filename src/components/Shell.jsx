@@ -11,7 +11,7 @@ import Prediksi from '../pages/Prediksi'
 import CuacaKurs from '../sections/CuacaKurs'
 import RekomendasiBand from '../sections/RekomendasiBand'
 import RingkasanRiset from '../sections/RingkasanRiset'
-import { LogoIcon, DashboardIcon, StoreIcon, PredictionIcon, WeatherIcon, RecommendationIcon, BookOpenIcon } from './Icons'
+import { DashboardIcon, StoreIcon, PredictionIcon, WeatherIcon, RecommendationIcon, BookOpenIcon } from './Icons'
 
 const ROUTES = ['/', '/eksplorasi', '/prediksi', '/cuaca', '/rekomendasi', '/riset']
 const SECTION_CLASS = { '/cuaca': 'card', '/rekomendasi': 'card', '/riset': 'card' }
@@ -33,10 +33,7 @@ export default function Shell() {
         {/* Left Sidebar Navigation (EdgesPay SaaS Style) */}
         <aside className="sidebar" id="sidebar-nav" aria-label="Navigasi utama">
           <div className="sidebar__brand">
-            <div className="sidebar__logo-icon">
-              <LogoIcon size={18} />
-            </div>
-            <span className="sidebar__brand-name">Patani</span>
+            <img className="sidebar__logo" src={`${import.meta.env.BASE_URL}patani-logo.png`} alt="Logo Patani" />
           </div>
 
           <nav className="sidebar__nav mono">

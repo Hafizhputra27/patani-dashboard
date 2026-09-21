@@ -7,11 +7,11 @@
   --ink: #111827;
   --ink-muted: #6B7280;
   --line: #E5E7EB;
-  --green-50: #F0FDF4;
-  --green-100: #DCFCE7;
-  --green-200: #BBF7D0;
-  --green-600: #16A34A;
-  --green-700: #15803D;
+  --green-50: #EEF3EC;
+  --green-100: #DDE8D8;
+  --green-200: #C0D1B7;
+  --green-600: #487848;
+  --green-700: #3A5F3A;
   --accent: var(--green-600);
   --accent-ink: #FFFFFF;
   --primary: var(--green-600);
@@ -89,24 +89,11 @@ body {
   margin-bottom: 16px;
 }
 
-.sidebar__logo-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--ink);
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-}
-
-.sidebar__brand-name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--ink);
-  letter-spacing: -0.02em;
+.sidebar__logo {
+  width: 100%;
+  max-height: 90px;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .sidebar__nav {
@@ -194,6 +181,13 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+.topbar__logo {
+  height: 40px;
+  width: auto;
+  border-radius: 10px;
+  flex-shrink: 0;
 }
 
 .nav-toggle {
