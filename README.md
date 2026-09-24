@@ -62,6 +62,63 @@ p10–p90 melebar ~√waktu, dan parameter beralih ke "dekat Lebaran" bila
 tanggal target masuk window Lebaran. Angka model dari `prediksi.json` tetap
 ditampilkan apa adanya, berlabel "dihitung dari 22 Agu 2026".
 
+## Prediksi harga — dari mana angkanya?
+
+Angka model di `#/prediksi` dihasilkan di repo pipeline [`example_scrap`](https://github.com/Hafizhputra27/example_scrap), bukan di browser — dashboard hanya membaca `public/data/prediksi.json` dan menampilkannya.
+
+### 1. Rumus
+
+Bukan regresi linear biasa. LightGBM = gabungan **500 decision tree** (satu model per horizon: `model_direct_h{1,3,7}.txt`). Model memprediksi **selisih harga**, lalu hasilnya dijumlahkan ke harga terakhir yang tercatat (**anchor**):
+
+| Termin | Arti |
+| --- | --- |
+| `harga_prediksi(t)` | harga prediksi di hari target `t` |
+| `harga_anchor` | harga terakhir yang lengkap ("hari ini") |
+| `Δ(x)` | selisih yang diprediksi = `0.05 × Σ(m=1..500) T_m(x)` |
+| `T_m(x)` | pohon ke-`m` dari 500 pohon, tiap pohon punya aturan percabangan sendiri |
+| `x` | fitur input (poin 2) |
+
+$$harga\_prediksi(t) = harga\_anchor + 0.05 \times \sum_{m=1}^{500} T_m(x)$$
+
+### 2. Fitur input (per pasar + komoditas)
+
+| Grup | Fitur |
+| --- | --- |
+| Harga historis | harga kemarin (`lag1`), 7 hari lalu (`lag7`), 14 hari lalu (`lag14`), rata-rata & deviasi rolling 7 hari, rata-rata rolling 14 hari |
+| Cuaca | curah hujan hari ini + akumulasi 7 & 14 hari, suhu rata-rata/min/max |
+| Kurs | USD/IDR hari ini & 7 hari lalu |
+| Kalender | hari-dalam-minggu, bulan, akhir pekan, jarak hari ke Lebaran terdekat |
+
+### 3. Sumber data
+
+| Data | Sumber |
+| --- | --- |
+| Harga harian | SIBAPOKTING Kab. Bandung (di-scrape manual, tidak ada API) |
+| Cuaca | Open-Meteo |
+| Kurs USD/IDR | Frankfurter (ECB) |
+
+Scope: 9 pasar, 25 komoditas, rentang 2024-08-22 s.d. 2026-08-22.
+
+### 4. Bagaimana prediksi dibuat
+
+Untuk tiap (pasar, komoditas): ambil baris terakhir yang lengkap sebagai anchor ("hari ini"), hitung fitur kalender untuk tanggal target (`anchor` + H hari), jalankan model horizon H → dapat `delta` → `harga_prediksi = anchor + delta`.
+
+> **Prediksi dihitung dari TANGGAL DATA TERAKHIR, bukan dari hari ini.**
+
+### 5. Keterbatasan (angka nyata dari `riset.json`)
+
+Model ML **tidak mengalahkan baseline naif** "harga besok = harga hari ini" — MAE model > MAE baseline di semua horizon:
+
+| Horizon | MAE model | MAE baseline | Selisih |
+| --- | ---: | ---: | ---: |
+| H+1 | 602 | 481 | 25,2% |
+| H+3 | 1.246 | 979 | 27,2% |
+| H+7 | 1.905 | 1.648 | 15,6% |
+
+- Prediksi model ditampilkan sebagai **pembanding, bukan angka otoritatif**.
+- Rekomendasi band harga dibangun dari **distribusi empiris (p10–p90)**, bukan dari model ML.
+- Harga = acuan negosiasi petani, bukan harga pasti tengkulak.
+
 ## Prinsip (dari PRD §2)
 
 - Setiap prediksi model ML tampil **berpasangan dengan baseline** + label
